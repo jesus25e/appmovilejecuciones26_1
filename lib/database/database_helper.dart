@@ -109,15 +109,15 @@ class DatabaseHelper {
     return result.map((map) => UserModel.fromMap(map)).toList();
   }
 
-  // Future<int> updateUser(UserModel user) async {
-  //   final db = await database;
-  //   return await db.update(
-  //     'users',
-  //     user.ToMap(),
-  //     where: 'id=?',
-  //     whereArgs: [user.id],
-  //   );
-  // }
+  Future<int> updateUser(UserModel user) async {
+    final db = await database;
+    return await db.update(
+      'users',
+      user.ToMap(),
+      where: 'id=?',
+      whereArgs: [user.id],
+    );
+  }
 
   Future<int> deleteUSer(int id) async {
     final db = await database;

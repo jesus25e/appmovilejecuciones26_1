@@ -1,3 +1,4 @@
+import 'package:appmovilejecuciones26_1/pages/users_page.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import 'login_page.dart';
@@ -11,8 +12,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Panel Principal'),
+        title: const Text(
+          'Panel Principal',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.blueAccent,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: Drawer(
         child: ListView(
@@ -61,6 +66,17 @@ class HomePage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (_) => const LoginPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people),
+              title: const Text('Listar Usuarios'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const UsersPage()),
                 );
               },
             ),

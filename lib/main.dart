@@ -1,3 +1,4 @@
+import 'package:appmovilejecuciones26_1/bloc/user/user_bloc.dart';
 import 'package:appmovilejecuciones26_1/widget/cardStateless.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +18,21 @@ class MyApp extends StatelessWidget {
     //Crea le repositorio que conecta el bloc con SQLite
     final userRepository = UserRepository();
     //Provee el loginBloc y le pasa el repositorio
-    return BlocProvider(
-      create: (_) => LoginBloc(userRepository),
+    // return BlocProvider(
+    //   create: (_) => LoginBloc(userRepository),
+    //   child: MaterialApp(
+    //     debugShowCheckedModeBanner: false,
+    //     title: 'Login Bloc SQLite',
+    //     home: const LoginPage(),
+    //   ),
+    // );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => LoginBloc(userRepository)),
+        BlocProvider(create: (_) => UserBloc(userRepository)),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Login Bloc SQLite',
         home: const LoginPage(),
       ),
     );
