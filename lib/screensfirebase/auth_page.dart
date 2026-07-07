@@ -1,3 +1,4 @@
+import 'package:appmovilejecuciones26_1/screensfirebase/operacion_menu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocfirebase/auth_bloc.dart';
@@ -135,7 +136,10 @@ class AuthPage extends StatelessWidget {
                         if (state is AuthSuccess) {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (_) => HomePage()),
+                            // MaterialPageRoute(builder: (_) => HomePage()),
+                            MaterialPageRoute(
+                              builder: (_) => OperacionMenuPage(),
+                            ),
                           );
                         } else if (state is AuthFailure) {
                           ScaffoldMessenger.of(

@@ -16,6 +16,44 @@ class OperacionBloc extends Bloc<OperacionEvent, OperacionState> {
           monto: event.monto,
           responsable: event.responsable,
         );
+        emit(OperacionSuccess());
+      } catch (e) {
+        emit(OperacionFailure(e.toString()));
+      }
+    });
+
+    on<CargarOperaciones>((event, emit) async {
+      emit(OperacionLoading());
+      try {
+        final operaciones = await repo.obtenerOperaciones();
+        emit(OperacionLoaded(operaciones));
+      } catch (e) {
+        emit(OperacionFailure(e.toString()));
+      }
+    });
+
+    on<ActualizarOperacion>((event, emit) async {
+      emit(OperacionLoading());
+      try {
+        await repo.actualizarOperacion(
+          idDoc: event.idDoc,
+          idOperacion: event.idOperacion,
+          descripcion: event.descripcion,
+          cantidad: event.cantidad,
+          monto: event.monto,
+          responsable: event.responsable,
+        );
+        emit(OperacionSuccess());
+      } catch (e) {
+        emit(OperacionFailure(e.toString()));
+      }
+    });
+
+    on<EliminarOperacion>((event, emit) async {
+      emit(OperacionLoading());
+      try {
+        await repo.eliminarOperacion(event.idDoc);
+        emit(OperacionSuccess());
       } catch (e) {
         emit(OperacionFailure(e.toString()));
       }

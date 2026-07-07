@@ -16,7 +16,12 @@ class HomePage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
-              Navigator.pop(context); //Regresa al login
+              Navigator.pop(context);
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(builder: (_) => AuthPage()),
+              //   (route) => false,
+              // ); //Regresa al login
             },
             icon: Icon(Icons.logout),
           ),

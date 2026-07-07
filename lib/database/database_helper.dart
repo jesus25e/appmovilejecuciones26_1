@@ -53,8 +53,8 @@ class DatabaseHelper {
         direccion TEXT NOT NULL,
         email NOT NULL UNIQUE,
         password TEXT NOT NULL  
-      )
-''');
+        )
+      ''');
     // Creamos un usuario interno para poder ingresar
     await db.insert('users', {
       'nombres': 'Administrador',

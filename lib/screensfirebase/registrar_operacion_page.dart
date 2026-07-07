@@ -1,6 +1,7 @@
 import 'package:appmovilejecuciones26_1/blocfirebase/operacion_event.dart';
 import 'package:appmovilejecuciones26_1/blocfirebase/operacion_state.dart';
 import 'package:appmovilejecuciones26_1/repositoriofirebase/operacion_repository.dart';
+import 'package:appmovilejecuciones26_1/screensfirebase/listado_operaciones_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocfirebase/operacion_bloc.dart';
@@ -25,8 +26,14 @@ class RegistrarOperacionPage extends StatelessWidget {
           child: BlocConsumer<OperacionBloc, OperacionState>(
             listener: (context, state) {
               if (state is OperacionSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Operacion registrada con Exito")),
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(content: Text("Operacion registrada con Exito")),
+                // );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ListadoOperacionesPage(),
+                  ),
                 );
               } else if (state is OperacionFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
