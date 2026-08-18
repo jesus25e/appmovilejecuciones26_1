@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
-import '../firebase_auth_repo.dart';
+import '../repositoriofirebase/firebase_auth_repo.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   //Referencia al repo de autenticacion con Firebase

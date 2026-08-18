@@ -2,6 +2,7 @@ import 'package:appmovilejecuciones26_1/blocfirebase/operacion_bloc.dart';
 import 'package:appmovilejecuciones26_1/blocfirebase/operacion_event.dart';
 import 'package:appmovilejecuciones26_1/blocfirebase/operacion_state.dart';
 import 'package:appmovilejecuciones26_1/repositoriofirebase/operacion_repository.dart';
+import 'package:appmovilejecuciones26_1/screensfirebase/detalle_operacion_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,7 +43,6 @@ class _ListadoOperacionesPageState extends State<ListadoOperacionesPage> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is OperacionLoaded) {
               final operaciones = state.operaciones;
-
               if (operaciones.isEmpty) {
                 return const Center(
                   child: Text('No hay operaciones Registradas'),
@@ -53,7 +53,7 @@ class _ListadoOperacionesPageState extends State<ListadoOperacionesPage> {
                 itemBuilder: (context, index) {
                   final op = operaciones[index];
                   final idCtrl = TextEditingController(
-                    text: (op['idOperaciones'] ?? '').toString(),
+                    text: (op['idOperacion'] ?? '').toString(),
                   );
                   final descCtrl = TextEditingController(
                     text: (op['descripcion'] ?? '').toString(),
@@ -72,7 +72,7 @@ class _ListadoOperacionesPageState extends State<ListadoOperacionesPage> {
                       subtitle: Text(
                         'ID:${op['idOperacion']}\n'
                         'Descripcion:${op['descripcion']}\n'
-                        'Cantidad:${op['cantidad']}-Monto:${op['monto']}\n'
+                        'Cantidad:${op['cantidad']} - Monto:${op['monto']}\n'
                         'responsable:${op['responsable']}',
                       ),
                       trailing: Row(
@@ -154,6 +154,9 @@ class _ListadoOperacionesPageState extends State<ListadoOperacionesPage> {
                                                 responsable: respCtrl.text,
                                               ),
                                             );
+                                            Navigator.pop(
+                                              context,
+                                            ); //Cerramos la vista
                                           },
                                           child: Text('Guardar'),
                                         ),
@@ -165,6 +168,52 @@ class _ListadoOperacionesPageState extends State<ListadoOperacionesPage> {
                             },
                             icon: Icon(Icons.edit),
                             color: Colors.blueAccent,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      DetalleOperacionPage(operacion: op),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.visibility,
+                              color: Colors.green,
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () async {
+                              final confirm = await showDialog<bool>(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text('¿Eliminar Operacion?'),
+                                  content: Text(
+                                    'Estas seguro de eliminar esta operacion?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
+                                      child: Text('Cancelar'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, true),
+                                      child: Text('Eliminar'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              if (confirm == true) {
+                                operacionBloc.add(
+                                  EliminarOperacion(idDoc: op['idDoc']),
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),
@@ -181,7 +230,7 @@ class _ListadoOperacionesPageState extends State<ListadoOperacionesPage> {
                 context,
               ).showSnackBar(SnackBar(content: Text('error: ${state.error}')));
             } else if (state is OperacionSuccess) {
-              Navigator.of(context, rootNavigator: true).pop();
+              // Navigator.of(context, rootNavigator: true).pop();
               operacionBloc.add(CargarOperaciones());
               ScaffoldMessenger.of(
                 context,

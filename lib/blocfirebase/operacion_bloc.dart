@@ -58,5 +58,9 @@ class OperacionBloc extends Bloc<OperacionEvent, OperacionState> {
         emit(OperacionFailure(e.toString()));
       }
     });
+
+    on<VerOperacion>((event, emit) async {
+      emit(OperacionDetalleLoaded(event.operacion));
+    });
   }
 }

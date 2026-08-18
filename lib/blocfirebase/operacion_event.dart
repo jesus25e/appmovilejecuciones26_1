@@ -38,3 +38,8 @@ class EliminarOperacion extends OperacionEvent {
   final String idDoc;
   EliminarOperacion({required this.idDoc});
 }
+
+class VerOperacion extends OperacionEvent {
+  final Map<String, dynamic> operacion;
+  VerOperacion({required this.operacion});
+}

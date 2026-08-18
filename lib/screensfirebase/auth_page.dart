@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocfirebase/auth_bloc.dart';
 import '../blocfirebase/auth_event.dart';
 import '../blocfirebase/auth_state.dart';
-import '../firebase_auth_repo.dart';
+import '../repositoriofirebase/firebase_auth_repo.dart';
 import 'home_page.dart';
 
 class AuthPage extends StatelessWidget {

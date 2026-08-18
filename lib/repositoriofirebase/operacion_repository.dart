@@ -24,10 +24,17 @@ class OperacionRepository {
         .collection('operaciones')
         .orderBy('fecha', descending: true)
         .get();
+    // return snapshot.docs.map((doc) {
+    //   return {'idDoc': doc.id, ...doc.data()};
+    // }).toList();
+
+    //Clase -
     return snapshot.docs.map((doc) {
       final data = doc.data();
-      return {'idDoc': doc.id, ...data};
+      data['idDoc'] = doc.id;
+      return data;
     }).toList();
+
     // return snapshot.docs
     //     .map((doc) => doc.data() as Map<String, dynamic>)
     //     .toList();

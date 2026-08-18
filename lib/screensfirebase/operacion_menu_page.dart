@@ -1,3 +1,5 @@
+import 'package:appmovilejecuciones26_1/screensfirebase/buscar_usuario_page.dart';
+import 'package:appmovilejecuciones26_1/screensfirebase/consumo_api_page.dart';
 import 'package:appmovilejecuciones26_1/screensfirebase/listado_operaciones_page.dart';
 import 'package:appmovilejecuciones26_1/screensfirebase/registrar_operacion_page.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,34 @@ class OperacionMenuPage extends StatelessWidget {
                   ),
                 );
               },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ConsumoApiPage()),
+                );
+              },
+              icon: Icon(Icons.cloud_download),
+              label: const Text("Consumir API desde Internet"),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => BuscarUsuarioPage()),
+                );
+              },
+              label: const Text("Buscar Usuario por ID"),
+              icon: const Icon(Icons.search),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
               ),
