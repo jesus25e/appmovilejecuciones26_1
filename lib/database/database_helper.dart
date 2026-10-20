@@ -87,20 +87,45 @@ class DatabaseHelper {
     );
   }
 
-  Future<UserModel?> login(String email, String password) async {
-    // Obtenemos la db
+  Future<UserModel?> login(String identificador, String password) async {
     final db = await database;
-    // Buscamos el usuario
+
+    String email = identificador.trim();
+
+    // 1. Si no es un correo, buscamos el email mediante el DNI
+    if (!email.contains('@')) {
+      final user = await db.query(
+        'users',
+        columns: ['email'],
+        where: 'dni = ?',
+        whereArgs: [email],
+        limit: 1,
+      );
+
+      // Si no existe un usuario con ese DNI
+      if (user.isEmpty) {
+        return null;
+      }
+
+      // Obtenemos el email asociado al DNI
+      email = user.first['email'] as String;
+    }
+
+    // 2. Validamos el email y la contraseña
     final result = await db.query(
       'users',
-      where: 'email=? AND password=?',
+      where: 'email = ? AND password = ?',
       whereArgs: [email, password],
+      limit: 1,
     );
 
-    // Si existe retorna al usuario
-    if (result.isNotEmpty) return UserModel.fromMap(result.first);
-    //Si no exist user retorna null
-    return null;
+    // Si las credenciales no coinciden
+    if (result.isEmpty) {
+      return null;
+    }
+
+    // 3. Convertimos el registro en UserModel
+    return UserModel.fromMap(result.first);
   }
 
   Future<List<UserModel>> getUsers() async {
